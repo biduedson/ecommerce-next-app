@@ -13,12 +13,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
 const DashboardLayout = async ({ children }: { children: ReactNode }) => {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  if (!user) {
+  if (!user || user.email !== "biduzao.bidu21@gmail.com") {
     return redirect("/");
   }
   return (
@@ -56,7 +57,9 @@ const DashboardLayout = async ({ children }: { children: ReactNode }) => {
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <LogoutLink>Logout</LogoutLink>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </header>
