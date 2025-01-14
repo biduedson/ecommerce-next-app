@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "./api/uploadthing/core";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +19,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <NextSSRPlugin
+          /**
+           * A propriedade `extractRouterConfig` extrai **somente** as configurações de rotas
+           * do router para evitar que informações adicionais sejam expostas ao cliente.
+           * Os dados passados para o cliente são os mesmos que seriam obtidos ao acessar
+           * diretamente `/api/uploadthing`.
+           */
+          routerConfig={extractRouterConfig(ourFileRouter)}
+        />
+
+        {children}
+      </body>
     </html>
   );
 }

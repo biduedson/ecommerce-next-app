@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -87,16 +88,21 @@ const ProductCreateRoute = () => {
                 endpoint="imageUploader"
                 onClientUploadComplete={(res) => {
                   // Do something with the response
+                  alert("Finished uploading");
                   console.log("Upload Completed Files: ", res);
                 }}
                 onUploadError={(error: Error) => {
                   // Do something with the error.
+                  alert("Something went wrong");
                   console.log(`ERROR! ${error.message}`);
                 }}
               />
             </div>
           </div>
         </CardContent>
+        <CardFooter>
+          <Button>Create Product</Button>
+        </CardFooter>
       </Card>
     </form>
   );
