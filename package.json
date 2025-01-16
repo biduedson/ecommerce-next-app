@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@conform-to/react": "^1.2.2",
+    "@conform-to/zod": "^1.2.2",
     "@kinde-oss/kinde-auth-nextjs": "^2.4.6",
     "@prisma/client": "^6.2.1",
     "@radix-ui/react-avatar": "^1.1.2",
@@ -27,7 +29,8 @@
     "react-dom": "^18",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
-    "uploadthing": "^7.4.4"
+    "uploadthing": "^7.4.4",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/node": "^20",
