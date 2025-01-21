@@ -100,7 +100,13 @@ const ProductsRoute = async () => {
                               Edit
                             </Link>
                           </DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
+                          <DropdownMenuItem asChild>
+                            <Link
+                              href={`/dashboard/products/${item.id}/delete`}
+                            >
+                              Delete
+                            </Link>
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
