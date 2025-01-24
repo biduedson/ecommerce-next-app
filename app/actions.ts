@@ -141,5 +141,5 @@ export async function deleteBanner(formData: FormData) {
       id: formData.get("bannerId") as string,
     },
   });
-  redirect("/dashboard/products");
+  redirect("/dashboard/banner");
 }
