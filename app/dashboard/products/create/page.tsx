@@ -33,7 +33,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { number } from "zod";
 import { categories } from "@/app/lib/categories";
-import SubmitButton from "@/app/components/SubmitButtons";
+import { SubmitButton } from "@/app/components/SubmitButtons";
 
 const ProductCreateRoute = () => {
   const [images, setImages] = useState<string[]>([]);

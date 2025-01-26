@@ -6,6 +6,9 @@ import { parseWithZod } from "@conform-to/zod"; // Valida formulários com o Zod
 import { bannerSchema, productSchema } from "./lib/zodSchemas"; // Esquema de validação para os dados do produto.
 import prisma from "./lib/db"; // Instância do Prisma ORM para interagir com o banco de dados.
 import { Schema } from "zod";
+import { redis } from "./lib/redis";
+import { Cart } from "./lib/interfaces";
+import { revalidatePath } from "next/cache";
 
 // Define a server action para criar um produto.
 export async function createProduct(prevState: unknown, formData: FormData) {
@@ -142,4 +145,69 @@ export async function deleteBanner(formData: FormData) {
     },
   });
   redirect("/dashboard/banner");
+}
+
+export async function addItem(productId: string) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  // Verifica se o usuário está autenticado e tem permissão para criar produtos.
+  if (!user) {
+    return redirect("/"); // Redireciona para a página inicial se não estiver autorizado.
+  }
+  let cart: Cart | null = await redis.get(`cart-${user.id}`);
+
+  const selecteProduc = await prisma.product.findUnique({
+    select: {
+      id: true,
+      name: true,
+      price: true,
+      images: true,
+    },
+    where: {
+      id: productId,
+    },
+  });
+
+  if (!selecteProduc) {
+    throw new Error("No product with this id");
+  }
+  let myCart = {} as Cart;
+  if (!cart || !cart.items) {
+    myCart = {
+      items: [
+        {
+          id: selecteProduc.id,
+          imageString: selecteProduc.images[0],
+          name: selecteProduc.name,
+          price: selecteProduc.price,
+          quantity: 1,
+        },
+      ],
+      userId: user.id,
+    };
+  } else {
+    let itemfound = false;
+    myCart.items = cart.items.map((item) => {
+      if (item.id === productId) {
+        itemfound = true;
+        item.quantity += 1;
+      }
+
+      return item;
+    });
+
+    if (!itemfound) {
+      myCart.items.push({
+        id: selecteProduc.id,
+        imageString: selecteProduc.images[0],
+        name: selecteProduc.name,
+        price: selecteProduc.price,
+        quantity: 1,
+      });
+    }
+  }
+
+  await redis.set(`cart-${user.id}`, myCart);
+  revalidatePath("/", "layout");
 }
