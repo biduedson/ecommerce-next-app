@@ -6,6 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -19,7 +20,7 @@ interface iAppProps {
   };
 }
 
-const ProductCard = ({ item }: iAppProps) => {
+export const ProductCard = ({ item }: iAppProps) => {
   return (
     <div className="rouded-lg">
       <Carousel className="w-full mx-auto">
@@ -58,4 +59,15 @@ const ProductCard = ({ item }: iAppProps) => {
   );
 };
 
-export default ProductCard;
+export const LoadingProductCard = () => {
+  return (
+    <div className="flex flex-col">
+      <Skeleton className="w-full h-[330px] flex-col mt-2" />
+      <div className="flex flex-col mt-2 gap-y-2">
+        <Skeleton className=" h-4 w-full" />
+        <Skeleton className=" h-6 w-full" />
+      </div>
+      <Skeleton className="w-full h-10 mt-5" />
+    </div>
+  );
+};

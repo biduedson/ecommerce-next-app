@@ -1,4 +1,4 @@
-import ProductCard from "@/app/components/storefront/ProductCard";
+import { ProductCard } from "@/app/components/storefront/ProductCard";
 import prisma from "@/app/lib/db";
 import { notFound } from "next/navigation";
 
