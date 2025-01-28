@@ -10,9 +10,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import React from "react";
+import { unstable_noStore as noStore } from "next/cache"; // Importa um método experimental para desativar o cache.
 
 const DeleteRoute = ({ params }: { params: { id: string } }) => {
+  noStore();
   return (
     <div className="h-[80vh] w-full flex items-center justify-center ">
       <Card className="max-w-xl">

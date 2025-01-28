@@ -11,8 +11,10 @@ import { DashboardStats } from "../components/dashboard/DashboardStats";
 import RecentSales from "../components/dashboard/RecenSales";
 import Chart from "../components/dashboard/Chart";
 import prisma from "../lib/db";
+import { unstable_noStore as noStore } from "next/cache"; // Importa um método experimental para desativar o cache.
 
 const getData = async () => {
+  noStore();
   const now = new Date();
   const sevendaysAgo = new Date();
   sevendaysAgo.setDate(now.getDate() - 7);

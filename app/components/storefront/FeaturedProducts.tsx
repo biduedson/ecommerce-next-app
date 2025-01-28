@@ -1,8 +1,10 @@
 import prisma from "@/app/lib/db";
 import { LoadingProductCard, ProductCard } from "./ProductCard";
 import { Suspense } from "react";
+import { unstable_noStore as noStore } from "next/cache"; // Importa um método experimental para desativar o cache.
 
 const getData = async () => {
+  noStore();
   const data = await prisma.product.findMany({
     where: {
       status: "published",
@@ -36,6 +38,7 @@ const FeaturedProducts = async () => {
 };
 
 async function LoadFeaturedProducts() {
+  noStore();
   const data = await getData();
 
   return (

@@ -9,8 +9,10 @@ import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { unstable_noStore as noStore } from "next/cache"; // Importa um método experimental para desativar o cache.
 
 const BagRoute = async () => {
+  noStore();
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 

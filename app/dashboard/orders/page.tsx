@@ -15,9 +15,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatCurrency } from "@/util/formatPrice";
-import React from "react";
+import { unstable_noStore as noStore } from "next/cache"; // Importa um método experimental para desativar o cache.
 
 async function getData() {
+  noStore();
   const data = await prisma.order.findMany({
     select: {
       createdAt: true,

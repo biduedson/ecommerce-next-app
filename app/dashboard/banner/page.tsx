@@ -26,9 +26,10 @@ import {
 import { MoreHorizontal, PlusCircle, User2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { unstable_noStore as noStore } from "next/cache"; // Importa um método experimental para desativar o cache.
 
 const getData = async () => {
+  noStore();
   const data = await prisma.banner.findMany({
     orderBy: {
       createdAt: "desc",

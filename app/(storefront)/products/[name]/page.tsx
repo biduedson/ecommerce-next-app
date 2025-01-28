@@ -1,8 +1,10 @@
 import { ProductCard } from "@/app/components/storefront/ProductCard";
 import prisma from "@/app/lib/db";
 import { notFound } from "next/navigation";
+import { unstable_noStore as noStore } from "next/cache"; // Importa um método experimental para desativar o cache.
 
 const getData = async (productCategory: string) => {
+  noStore();
   switch (productCategory) {
     case "all": {
       const data = await prisma.product.findMany({

@@ -7,8 +7,10 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
+import { unstable_noStore as noStore } from "next/cache"; // Importa um método experimental para desativar o cache.
 
 const getData = async () => {
+  noStore();
   const data = await prisma.banner.findMany({
     orderBy: {
       createdAt: "desc",
