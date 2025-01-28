@@ -23,7 +23,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { ChevronLeft, XIcon } from "lucide-react";
 import Link from "next/link";
-import SubmitButton from "../SubmitButtons";
+import { SubmitButton } from "../SubmitButtons";
 import { useState } from "react";
 import { useFormState } from "react-dom";
 import { createProduct, editProduct } from "@/app/actions";
