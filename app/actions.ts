@@ -150,7 +150,7 @@ export async function deleteBanner(formData: FormData) {
   redirect("/dashboard/banner");
 }
 
-export async function addItem(productId: string) {
+export async function addItem(productId: string, quantity: number) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -184,7 +184,7 @@ export async function addItem(productId: string) {
           imageString: selecteProduc.images[0],
           name: selecteProduc.name,
           price: selecteProduc.price,
-          quantity: 1,
+          quantity: quantity,
         },
       ],
       userId: user.id,
@@ -194,7 +194,7 @@ export async function addItem(productId: string) {
     myCart.items = cart.items.map((item) => {
       if (item.id === productId) {
         itemfound = true;
-        item.quantity += 1;
+        item.quantity += quantity;
       }
 
       return item;
@@ -206,7 +206,7 @@ export async function addItem(productId: string) {
         imageString: selecteProduc.images[0],
         name: selecteProduc.name,
         price: selecteProduc.price,
-        quantity: 1,
+        quantity: quantity,
       });
     }
   }

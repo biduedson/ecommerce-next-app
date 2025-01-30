@@ -5,7 +5,13 @@ import { ShoppingBagButton } from "@/app/components/SubmitButtons";
 import prisma from "@/app/lib/db";
 import { StarIcon } from "lucide-react";
 import { notFound } from "next/navigation";
-import { unstable_noStore as noStore } from "next/cache"; // Importa um método experimental para desativar o cache.
+import { unstable_noStore as noStore } from "next/cache"; // Importa um método experimental // para desativar o cache.
+import ChromePicker from "react-color/lib/components/chrome/Chrome";
+import ColorPicker from "@/app/components/products/ColorPicker";
+import { formatCurrency } from "@/util/formatPrice";
+import ProductOrderControl from "@/app/components/products/ProductOrderControl";
+
+//import { ChromePicker } from "react-color";
 
 const getData = async (productId: string) => {
   noStore();
@@ -27,6 +33,19 @@ const getData = async (productId: string) => {
   return data;
 };
 
+const StarRatingQuantity = (quantity: number) => {
+  const arrayringstar: React.ReactElement[] = [];
+  for (let i = 0; i < quantity; i++) {
+    arrayringstar.push(
+      <StarIcon
+        key={i}
+        className=" h-6 w-6 text-yellow-500  fill-yellow-500 cursor-pointer"
+      />
+    );
+  }
+  return arrayringstar;
+};
+
 const ProductIdRoute = async ({ params }: { params: { id: string } }) => {
   const data = await getData(params.id);
   const addProductToShoppingCart = addItem.bind(null, data.id);
@@ -36,22 +55,19 @@ const ProductIdRoute = async ({ params }: { params: { id: string } }) => {
         <ImageSlider images={data.images} />
 
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
+          <h1 className="text-[40px] font-bold uppercase tracking-tight text-gray-900">
             {data.name}
           </h1>
-          <p className="text-3xl mt-2 text-gray-900">${data.price}</p>
+          <p className="text-4xl font-bold mt-2 text-gray-900">
+            {formatCurrency(data.price * 100)}
+          </p>
           <div className="mt-3 flex items-center gap-1">
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-            <StarIcon className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+            {StarRatingQuantity(5)}
           </div>
           <p className="text-base text-gray-700 mt-6">{data.description}</p>
-
-          <form action={addProductToShoppingCart}>
-            <ShoppingBagButton />
-          </form>
+          <div className="flex gap-5 items-center ">
+            <ProductOrderControl productId={data.id} />
+          </div>
         </div>
       </div>
 
