@@ -25,31 +25,8 @@ const ImageSlider = ({ images }: iAppProps) => {
   };
 
   return (
-    <div className="grid gap-6 md:gap-3 items-start">
-      <div className="relative overflow-hidden rounded-lg">
-        <Image
-          width={600}
-          height={600}
-          src={images[mainImageIndex]}
-          alt="Product Image"
-          className="object-cover w-[600px] h-[600px] "
-        />
-
-        <div className="absolute inset-0 flex items-center justify-between px-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => handlePreviousClick()}
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </Button>
-          <Button variant="ghost" size="icon" onClick={() => handleNextClick()}>
-            <ChevronRight className="w-6 h-6" />
-          </Button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-5 gap-4">
+    <div className="flex flex-col-reverse lg:flex-row  gap-6 md:gap-3 items-start">
+      <div className="flex  lg:flex-col   gap-4">
         {images.map((image, index) => (
           <div
             key={index}
@@ -70,6 +47,28 @@ const ImageSlider = ({ images }: iAppProps) => {
             />
           </div>
         ))}
+      </div>
+      <div className="relative overflow-hidden rounded-lg ">
+        <Image
+          width={400}
+          height={400}
+          src={images[mainImageIndex]}
+          alt="Product Image"
+          className=" object-cover w-[444px] h-[530px] "
+        />
+
+        <div className="absolute inset-0 flex items-center justify-between px-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => handlePreviousClick()}
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </Button>
+          <Button variant="ghost" size="icon" onClick={() => handleNextClick()}>
+            <ChevronRight className="w-6 h-6" />
+          </Button>
+        </div>
       </div>
     </div>
   );
