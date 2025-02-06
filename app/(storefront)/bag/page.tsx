@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache"; // Importa um método experimental para desativar o cache.
+import ProductBagControl from "@/app/components/bag/ProductBagControl";
 
 const BagRoute = async () => {
   noStore();
@@ -64,13 +65,16 @@ const BagRoute = async () => {
                 <p>{item.name}</p>
                 <div className="flex flex-col h-full justify-between">
                   <div className="flex items-center gap-x-2">
-                    <p>{item.quantity} x</p>
+                  <ProductBagControl productId={item.id} qtd={item.quantity}/>
+                    <p>x</p>
                     <p>${item.price}</p>
                   </div>
+                  
                   <form action={deleItem} className="text-end">
                     <input type="hidden" name="productId" value={item.id} />
                     <DeleteItem />
                   </form>
+                 
                 </div>
               </div>
             </div>

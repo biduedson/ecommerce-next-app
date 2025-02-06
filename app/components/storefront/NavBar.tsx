@@ -19,7 +19,7 @@ const NavBar = async () => {
   let total: number | undefined;
   if (user) {
     cart = await redis.get(`cart-${user.id}`);
-    total = cart?.items.reduce((sum, item) => sum + item.quantity, 0);
+   if(cart?.items) total = cart?.items.reduce((sum, item) => sum + item.quantity, 0);
   }
 
   return (

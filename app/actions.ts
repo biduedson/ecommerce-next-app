@@ -214,6 +214,48 @@ export async function addItem(productId: string, quantity: number) {
   await redis.set(`cart-${user.id}`, myCart);
   revalidatePath("/", "layout");
 }
+export async function upQuantityItemBag(productId: string, quantity: number) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  // Verifica se o usuário está autenticado e tem permissão para criar produtos.
+  if (!user) {
+    return redirect("/"); // Redireciona para a página inicial se não estiver autorizado.
+  }
+  let cart: Cart | null = await redis.get(`cart-${user.id}`);
+
+  if (!cart) {
+    throw new Error("Carrinho não encontrado");
+  }
+
+  cart.items = cart.items.map((item) =>
+    item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
+  );
+
+  await redis.set(`cart-${user.id}`, cart);
+  revalidatePath("/", "layout");
+}
+export async function downQuantityItemBag(productId: string, quantity: number) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  // Verifica se o usuário está autenticado e tem permissão para criar produtos.
+  if (!user) {
+    return redirect("/"); // Redireciona para a página inicial se não estiver autorizado.
+  }
+  let cart: Cart | null = await redis.get(`cart-${user.id}`);
+
+  if (!cart) {
+    throw new Error("Carrinho não encontrado");
+  }
+
+  cart.items = cart.items.map((item) =>
+    item.id === productId ? { ...item, quantity: item.quantity - 1 } : item
+  );
+
+  await redis.set(`cart-${user.id}`, cart);
+  revalidatePath("/", "layout");
+}
 
 export async function deleItem(formData: FormData) {
   const { getUser } = getKindeServerSession();
