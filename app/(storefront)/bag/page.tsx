@@ -11,6 +11,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache"; // Importa um método experimental para desativar o cache.
 import ProductBagControl from "@/app/components/bag/ProductBagControl";
+import { Separator } from "@/components/ui/separator";
 
 const BagRoute = async () => {
   noStore();
@@ -52,7 +53,7 @@ const BagRoute = async () => {
       ) : (
         <div className="flex flex-col gap-y-10">
           {cart?.items.map((item) => (
-            <div key={item.id} className="flex">
+            <div key={item.id} className="flex-col flex lg:flex-row">
               <div className="w-24 h-24 sm:w-32 sm:h-32 relative">
                 <Image
                   src={item.imageString}
@@ -61,22 +62,25 @@ const BagRoute = async () => {
                   className="rounded-md object-cover"
                 />
               </div>
-              <div className="ml-5 flex justify-between w-full font-medium">
+              <div className="ml-0 gap-y-2 lg:gap-y-0 lg:ml-5 flex-col lg:flex-row flex justify-between w-full font-medium">
                 <p>{item.name}</p>
                 <div className="flex flex-col h-full justify-between">
                   <div className="flex items-center gap-x-2">
-                  <ProductBagControl productId={item.id} qtd={item.quantity}/>
+                    <ProductBagControl
+                      productId={item.id}
+                      qtd={item.quantity}
+                    />
                     <p>x</p>
                     <p>${item.price}</p>
                   </div>
-                  
-                  <form action={deleItem} className="text-end">
+
+                  <form action={deleItem} className=" text-end">
                     <input type="hidden" name="productId" value={item.id} />
                     <DeleteItem />
                   </form>
-                 
                 </div>
               </div>
+              <Separator className="my-2 p-[2px] lg:hidden" />
             </div>
           ))}
           <div className="mt-10">

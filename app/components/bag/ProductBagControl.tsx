@@ -36,12 +36,12 @@ const ProductBagControl = ({ productId, qtd }: iAppProps) => {
 
   return (
     <div className="flex gap-5 items-center w-full ">
-      <div className="px-5 flex justify-between  items-center w-[170px] h-[44px] bg-[#efefef] rounded-full">
+      <div className="px-2 lg:px-5 flex justify-between  items-center w-[100px] h-[34px] lg:w-[130px] lg:h-[34px]  bg-[#efefef] rounded-full">
         <CircleMinus
           className="cursor-pointer"
           onClick={() => downQuantity()}
         />
-        <p className="text-xl font-semibold">{quantity}</p>
+        <p className="text-sm lg:text-[16px] font-semibold">{quantity}</p>
         <CirclePlus className="cursor-pointer" onClick={() => upQuantity()} />
       </div>
     </div>

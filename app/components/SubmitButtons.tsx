@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Loader2, ShoppingBag } from "lucide-react";
+import { Loader2, ShoppingBag, Trash2 } from "lucide-react";
 import { useFormStatus } from "react-dom";
 
 interface buttonProps {
@@ -64,7 +64,7 @@ export function DeleteItem() {
         </button>
       ) : (
         <button type="submit" className="font-medium text-primary text-end">
-          Delete
+          <Trash2 />
         </button>
       )}
     </>
